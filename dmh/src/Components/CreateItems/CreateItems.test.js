@@ -76,6 +76,54 @@ describe('CreateItems', ()=>{
         expect(ciState.weapon_properties).toBeDefined();
     });
 
+    it('has weapon_damage property defined', ()=>{
+        expect(ciState.weapon_damage).toBeDefined();
+    });
+
+    it('has weapon_range property defined', ()=>{
+        expect(ciState.weapon_range).toBeDefined();
+    });
+
+    it('has has_charges property defined', ()=>{
+        expect(ciState.has_charges).toBeDefined();
+    });
+
+    it('has number_of_charges property defined', ()=>{
+        expect(ciState.number_of_charges).toBeDefined();
+    });
+
+    it('has charges_reset_condition property defined', ()=>{
+        expect(ciState.charges_reset_condition).toBeDefined();
+    });
+
+    it('has charges_reset_description property defined', ()=>{
+        expect(ciState.charges_reset_description).toBeDefined();
+    });
+
+    it('has weight property defined', ()=>{
+        expect(ciState.weight).toBeDefined();
+    });
+
+    it('has price property defined', ()=>{
+        expect(ciState.price).toBeDefined();
+    });
+
+    it('has item_tags property defined', ()=>{
+        expect(ciState.item_tags).toBeDefined();
+    });
+
+    it('has modifiers property defined', ()=>{
+        expect(ciState.modifiers).toBeDefined();
+    });
+
+    it('has conditions property defined', ()=>{
+        expect(ciState.conditions).toBeDefined();
+    });
+
+    it('has spells property defined', ()=>{
+        expect(ciState.spells).toBeDefined();
+    });
+
     it('has 2 input elements renedered', ()=>{
         const selectElement = ciWrapper.find('input');
         expect(selectElement).toHaveLength(2);
@@ -252,16 +300,35 @@ describe('ChangeFormLayout',()=>{
             item_type: "wonderous_items",
             attunement: true,
             attunement_description: "Drop donw",
-            description: "LAAAAAAAAAAAA"
+            description: "LAAAAAAAAAAAA",
+            base_armor : "light",
+            dex_bonus : "max2",
+            str_requirement: 10,
+            stealth_check: "disadvantage",
+            base_weapon_type: "simple_ranged",
+            base_weapon: "any",
+            weapon_properties: [],
+            weapon_damage: [2, 8],
+            weapon_range: 120,
+            has_charges: true,
+            number_of_charges: 5,
+            charges_reset_condition: "dawn",
+            charges_reset_description: "",
+            weight : 15,
+            price: [1, 2, 0],
+            item_tags: ["armor", "uncommon"],
+            modifiers: [],
+            conditions: [],
+            spells: []
         })
 
         ciWrapper.find('button').at(1).simulate('click');
         const ciState = ciWrapper.state();
-        expect(ciState.name).toContain("");
+        expect(ciState.name).toEqual("");
         expect(ciState.rarity).toContain("common");
         expect(ciState.attunement).toBeFalsy();
-        expect(ciState.attunement_description).toContain("");
-        expect(ciState.description).toContain("");
+        expect(ciState.attunement_description).toEqual("");
+        expect(ciState.description).toEqual("");
         expect(ciState.base_item_type).toContain("item");
         expect(ciState.item_type).toContain("wonderous_items");
         expect(ciState.base_armor).toContain("any");
@@ -271,6 +338,18 @@ describe('ChangeFormLayout',()=>{
         expect(ciState.base_weapon_type).toContain("simple_melee");
         expect(ciState.base_weapon).toContain("any");
         expect(ciState.weapon_properties).toEqual([]);
+        expect(ciState.weapon_damage).toEqual([1, 4]);
+        expect(ciState.weapon_range).toEqual(5);
+        expect(ciState.has_charges).toBeFalsy();
+        expect(ciState.number_of_charges).toEqual(0);
+        expect(ciState.charges_reset_condition).toContain("none");
+        expect(ciState.charges_reset_description).toEqual("");
+        expect(ciState.weight).toEqual(0);
+        expect(ciState.price).toEqual([0,0,0]);
+        expect(ciState.item_tags).toEqual([]);
+        expect(ciState.modifiers).toEqual([]);
+        expect(ciState.conditions).toEqual([]);
+        expect(ciState.spells).toEqual([]);
     });
 
     it('changes base_item_type to armor and then changes selections', ()=>{

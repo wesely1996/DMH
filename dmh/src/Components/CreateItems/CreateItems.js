@@ -18,7 +18,19 @@ class CreateItems extends Component{
             stealth_check: "none",
             base_weapon_type: "simple_melee",
             base_weapon: "any",
-            weapon_properties: []
+            weapon_properties: [],
+            weapon_damage: [1, 4],
+            weapon_range: 5,
+            has_charges: false,
+            number_of_charges: 0,
+            charges_reset_condition: "none",
+            charges_reset_description: "",
+            weight : 0,
+            price: [0, 0, 0],
+            item_tags: [],
+            modifiers: [],
+            conditions: [],
+            spells: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -99,7 +111,19 @@ class CreateItems extends Component{
             stealth_check: "none",
             base_weapon_type: "simple_melee",
             base_weapon: "any",
-            weapon_properties: []
+            weapon_properties: [],
+            weapon_damage: [1, 4],
+            weapon_range: 5,
+            has_charges: false,
+            number_of_charges: 0,
+            charges_reset_condition: "none",
+            charges_reset_description: "",
+            weight : 0,
+            price: [0, 0, 0],
+            item_tags: [],
+            modifiers: [],
+            conditions: [],
+            spells: []
         });
     }
     
