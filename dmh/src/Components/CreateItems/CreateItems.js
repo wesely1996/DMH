@@ -21,6 +21,11 @@ class CreateItems extends Component{
         switch(event.target.name){
             case "baseItemTypeSelection":
                 this.setState({base_item_type: event.target.value});
+                if(this.state.base_item_type !== "item"){
+                    this.setState({item_type: this.state.base_item_type})
+                }else{
+                    this.setState({item_type: 'wonderous_items'})
+                }
                 break;
             case "raritySelect":
                 this.setState({rarity: event.target.value});
@@ -43,6 +48,18 @@ class CreateItems extends Component{
             default:
                 break;
         }
+    }
+
+    resetItem = () =>{
+        this.setState({
+            name : "",
+            rarity : "common",
+            base_item_type: "item",
+            item_type: "wonderous_items",
+            attunement: false,
+            attunement_description: "",
+            description: ""
+        });
     }
     
     handleSubmit(event) {
@@ -146,10 +163,12 @@ class CreateItems extends Component{
                         value={this.state.description}/>
                     </div>
                     <div>
-                        <button type="submit">
+                        <button type="submit"
+                        onClick={this.handleSubmit}>
                             Craft Item
                         </button>
-                        <button type="reset">
+                        <button type="reset"
+                        onClick={this.resetItem}>
                             Scrap Item
                         </button>
                     </div>

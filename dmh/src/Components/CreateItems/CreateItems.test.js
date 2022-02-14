@@ -198,4 +198,26 @@ describe('ChangeFormLayout',()=>{
         });
         expect(ciWrapper.state().description).toContain(desc);
     });
+
+    it('resets item on Scrap item clicked', ()=>{
+        ciWrapper.setState({
+            name : "Random",
+            rarity : "uncommon",
+            base_item_type: "armor",
+            item_type: "wonderous_items",
+            attunement: true,
+            attunement_description: "Drop donw",
+            description: "LAAAAAAAAAAAA"
+        })
+
+        ciWrapper.find('button').at(1).simulate('click');
+        const ciState = ciWrapper.state();
+        expect(ciState.name).toContain("");
+        expect(ciState.rarity).toContain("common");
+        expect(ciState.attunement).toBeFalsy();
+        expect(ciState.attunement_description).toContain("");
+        expect(ciState.description).toContain("");
+        expect(ciState.base_item_type).toContain("item");
+        expect(ciState.item_type).toContain("wonderous_items");
+    });
 });
