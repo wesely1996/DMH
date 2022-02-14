@@ -11,7 +11,14 @@ class CreateItems extends Component{
             item_type: "wonderous_items",
             attunement: false,
             attunement_description: "",
-            description: ""
+            description: "",
+            base_armor : "any",
+            dex_bonus : "none",
+            str_requirement: 0,
+            stealth_check: "none",
+            base_weapon_type: "simple_melee",
+            base_weapon: "any",
+            weapon_properties: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,11 +27,23 @@ class CreateItems extends Component{
     handleChange(event) {
         switch(event.target.name){
             case "baseItemTypeSelection":
-                this.setState({base_item_type: event.target.value});
-                if(this.state.base_item_type !== "item"){
-                    this.setState({item_type: this.state.base_item_type})
+                if(event.target.value === "item"){
+                    this.setState({
+                        base_item_type: event.target.value,
+                        item_type: 'wonderous_items',
+                        base_armor: "any"
+                    });
+                }else if(event.target.value === "armor"){
+                    this.setState({
+                        base_item_type: event.target.value,
+                        item_type: this.state.base_item_type
+                    });
                 }else{
-                    this.setState({item_type: 'wonderous_items'})
+                    this.setState({
+                        base_item_type: event.target.value,
+                        item_type: this.state.base_item_type,
+                        base_armor: "any"
+                    });
                 }
                 break;
             case "raritySelect":
@@ -45,6 +64,21 @@ class CreateItems extends Component{
             case "itemDescriptionInput":
                 this.setState({description: event.target.value});
                 break;
+            case "baseArmorSelection":
+                this.setState({base_armor: event.target.value});
+                break;
+            case "dexBonusSelector":
+                this.setState({dex_bonus: event.target.value});
+                break;
+            case "strRequirementInput":
+                this.setState({str_requirement: event.target.value});
+                break;
+            case "stealthCheckSelector":
+                this.setState({stealth_check: event.target.value});
+                break;
+            case "baseWeaponTypeSelector":
+                this.setState({base_weapon_type: event.target.value});
+                break;
             default:
                 break;
         }
@@ -58,7 +92,14 @@ class CreateItems extends Component{
             item_type: "wonderous_items",
             attunement: false,
             attunement_description: "",
-            description: ""
+            description: "",
+            base_armor : "any",
+            dex_bonus : "none",
+            str_requirement: 0,
+            stealth_check: "none",
+            base_weapon_type: "simple_melee",
+            base_weapon: "any",
+            weapon_properties: []
         });
     }
     
@@ -115,9 +156,9 @@ class CreateItems extends Component{
                             </select>
                         </div>
                     </div>
-                    <div className="d-flex flex-row justify-content-center">
+                    <div>
                         {this.state.base_item_type === "item" ?
-                            <div>
+                            <div className="d-flex flex-row justify-content-center">
                                 <label className="mr-1" htmlFor="itemTypeSelection">
                                     Item type
                                 </label>
@@ -136,8 +177,98 @@ class CreateItems extends Component{
                                 </select>
                             </div> : 
                         this.state.base_item_type === "armor" ?
-                            <div>Armor</div> :
-                            <div>Weapon</div>
+                            <div className="d-flex flex-row justify-content-center">
+                                <div className="d-flex flex-column">
+                                    <label htmlFor="baseArmorSelection">
+                                        Base Armor
+                                    </label>
+                                    <select
+                                    name="baseArmorSelection"
+                                    onChange={this.handleChange}
+                                    value={this.state.base_armor}>
+                                        <option value="any">Any</option>
+                                        <option value="light">Light</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="heavy">Heavy</option>
+                                        <option value="light_medium">Light or Medium</option>
+                                        <option value="medium_heavy">Medium or Heavy</option>
+                                        <option value="padded">Padded</option>
+                                        <option value="leather">Leather</option>
+                                        <option value="studded_leather">Studded Leather</option>
+                                        <option value="hide">Hide</option>
+                                        <option value="chain_shirt">Chain shirt</option>
+                                        <option value="scale_mail">Scale mail</option>
+                                        <option value="breastplate">Breastplate</option>
+                                        <option value="half_plate">Half Plate</option>
+                                        <option value="ring_mail">Ring Mail</option>
+                                        <option value="chain_mail">Chain Mail</option>
+                                        <option value="splint">Splint</option>
+                                        <option value="plate">Plate</option>
+                                        <option value="shield">Shield</option>
+                                    </select>
+                                </div>
+                                <div className="d-flex flex-column">
+                                    <label htmlFor="dexBonusSelector">
+                                        Dex Bonus
+                                    </label>
+                                    <select
+                                    name="dexBonusSelector"
+                                    onChange={this.handleChange}
+                                    value={this.state.dex_bonus}>
+                                        <option value="none">None</option>
+                                        <option value="full">Full Moddifier</option>
+                                        <option value="max2">Max 2</option>
+                                    </select>
+                                </div>
+                                <div className="d-flex flex-column">
+                                    <label htmlFor="strRequirementInput">
+                                        Str Requirement
+                                    </label>
+                                    <input name="strRequirementInput"
+                                    value={this.state.str_requirement}
+                                    onChange={this.handleChange}/>
+                                </div>
+                                <div className="d-flex flex-column">
+                                    <label htmlFor="stealthCheckSelector">
+                                        Stealth Check
+                                    </label>
+                                    <select
+                                    name="stealthCheckSelector"
+                                    onChange={this.handleChange}
+                                    value={this.state.stealth_check}>
+                                        <option value="none">None</option>
+                                        <option value="disadvantage">Disadvantage</option>
+                                        <option value="advantage">Advantage</option>
+                                    </select>
+                                </div>
+                            </div> :
+                            <div className="d-flex flex-column justify-content-center">
+                                <div className="d-flex flex-row justify-content-center">
+                                    <label htmlFor="baseWeaponTypeSelector" className="m-1">
+                                        Base Weapon Type
+                                    </label>
+                                    <select className="m-1"
+                                    name="baseWeaponTypeSelector"
+                                    onChange={this.handleChange}
+                                    value={this.state.base_weapon_type}>
+                                        <option value="simple_melee">Simple Melee</option>
+                                        <option value="simple_ranged">Simple Ranged</option>
+                                        <option value="martial_melee">Martial Melee</option>
+                                        <option value="martial_ranged">Martial Ranged</option>
+                                        <option value="advanced_melee">Advanced Melee</option>
+                                        <option value="advanced_ranged">Advanced Ranged</option>
+                                    </select>
+                                </div>
+                                {
+                                this.state.base_weapon_type.includes("melee") ?
+                                <div className="d-flex flex-row justify-content-center">
+                                    Melee Weapon
+                                </div> :
+                                <div className="d-flex flex-row justify-content-center">
+                                    Ranged Weapon
+                                </div>
+                                }
+                            </div>
                         }
                     </div>
                     <div>

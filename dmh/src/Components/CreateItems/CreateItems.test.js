@@ -48,6 +48,34 @@ describe('CreateItems', ()=>{
         expect(ciState.description).toBeDefined();
     });
 
+    it('has base_armor property defined', ()=>{
+        expect(ciState.base_armor).toBeDefined();
+    });
+
+    it('has dex_bonus property defined', ()=>{
+        expect(ciState.dex_bonus).toBeDefined();
+    });
+
+    it('has str_requirement property defined', ()=>{
+        expect(ciState.str_requirement).toBeDefined();
+    });
+
+    it('has stealth_check property defined', ()=>{
+        expect(ciState.stealth_check).toBeDefined();
+    });
+
+    it('has base_weapon_type property defined', ()=>{
+        expect(ciState.base_weapon_type).toBeDefined();
+    });
+
+    it('has base_weapon property defined', ()=>{
+        expect(ciState.base_weapon).toBeDefined();
+    });
+
+    it('has weapon_properties property defined', ()=>{
+        expect(ciState.weapon_properties).toBeDefined();
+    });
+
     it('has 2 input elements renedered', ()=>{
         const selectElement = ciWrapper.find('input');
         expect(selectElement).toHaveLength(2);
@@ -63,6 +91,23 @@ describe('CreateItems', ()=>{
     it('has 3 select elements renedered', ()=>{
         const selectElement = ciWrapper.find('select');
         
+        expect(selectElement).toHaveLength(3);
+    });
+
+    it('has 5 select and 4 input elements renedered when base_item_type is armor', ()=>{
+        ciWrapper.setState({base_item_type: 'armor'});
+        
+        const selectElement = ciWrapper.find('select');
+        expect(selectElement).toHaveLength(5);
+        
+        const inputElement = ciWrapper.find('input');
+        expect(inputElement).toHaveLength(4);
+    });
+
+    it('has 5 select elements renedered when base_item_type is armor', ()=>{
+        ciWrapper.setState({base_item_type: 'weapon'});
+        
+        const selectElement = ciWrapper.find('select');
         expect(selectElement).toHaveLength(3);
     });
 
@@ -219,5 +264,41 @@ describe('ChangeFormLayout',()=>{
         expect(ciState.description).toContain("");
         expect(ciState.base_item_type).toContain("item");
         expect(ciState.item_type).toContain("wonderous_items");
+        expect(ciState.base_armor).toContain("any");
+        expect(ciState.dex_bonus).toContain("none");
+        expect(ciState.str_requirement).toEqual(0);
+        expect(ciState.stealth_check).toContain("none");
+        expect(ciState.base_weapon_type).toContain("simple_melee");
+        expect(ciState.base_weapon).toContain("any");
+        expect(ciState.weapon_properties).toEqual([]);
+    });
+
+    it('changes base_item_type to armor and then changes selections', ()=>{
+        ciWrapper.setState({base_item_type: 'armor'});
+        ciWrapper.find('select').at(2).simulate('change',{
+            target: {value: 'light', name: "baseArmorSelection"}
+        });
+        ciWrapper.find('select').at(3).simulate('change',{
+            target: {value: 'max2', name: "dexBonusSelector"}
+        });
+        ciWrapper.find('input').at(2).simulate('change',{
+            target: {value: 5, name: "strRequirementInput"}
+        });
+        ciWrapper.find('select').at(4).simulate('change',{
+            target: {value: 'advantage', name: "stealthCheckSelector"}
+        });
+
+        expect(ciWrapper.state().base_armor).toContain('light');
+        expect(ciWrapper.state().dex_bonus).toContain('max2');
+        expect(ciWrapper.state().str_requirement).toEqual(5);
+        expect(ciWrapper.state().stealth_check).toContain('advantage');
+    });
+
+    it('changes base_item_type to weapon and then changes selections', ()=>{
+        ciWrapper.setState({base_item_type: 'weapon'});
+        ciWrapper.find('select').at(2).simulate('change',{
+            target: {value: 'simple_ranged', name: "baseWeaponTypeSelector"}
+        });
+        expect(ciWrapper.state().base_weapon_type).toContain('simple_ranged');
     });
 });
