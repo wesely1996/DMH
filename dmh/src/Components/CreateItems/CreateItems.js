@@ -91,6 +91,9 @@ class CreateItems extends Component{
             case "baseWeaponTypeSelector":
                 this.setState({base_weapon_type: event.target.value});
                 break;
+            case "baseWeaponSelector":
+                this.setState({base_weapon: event.target.value});
+                break;
             default:
                 break;
         }
@@ -134,8 +137,8 @@ class CreateItems extends Component{
     
     render(){
         return(
-            <div className='py-3 px-3 text-center d-flex justify-content-center'>
-                <form className="d-flex flex-column w-75"
+            <div className='py-3 px-3 text-center d-flex justify-content-center w-100'>
+                <form  id="forge" className="d-flex flex-column w-75"
                 onSubmit={this.handleSubmit}>
                     <h2 className='text-white mb-4 mt-4 font-weight-bold'
                     id='forgeName'>
@@ -145,7 +148,9 @@ class CreateItems extends Component{
                         <label className="mr-1" htmlFor="nameInput">
                             Name 
                         </label>
-                        <input className="ml-1" type="text" name="nameInput"
+                        <input className="ml-1 form-control" 
+                        type="text" 
+                        name="nameInput"
                         value={this.state.name}
                         onChange={this.handleChange}/>
                     </div>
@@ -154,7 +159,8 @@ class CreateItems extends Component{
                             <label className="mr-1" htmlFor="raritySelect">
                                 Rarity 
                             </label>
-                            <select className="ml-1" name="raritySelect"
+                            <select className="ml-1 form-control" 
+                            name="raritySelect"
                             onChange={this.handleChange}
                             value={this.state.rarity}>
                                 <option value="common">Common</option>
@@ -170,7 +176,7 @@ class CreateItems extends Component{
                             <label className="mr-1" htmlFor="baseItemTypeSelection">
                                 Base Item Type 
                             </label>
-                            <select className="ml-1" 
+                            <select className="ml-1 form-control" 
                             name="baseItemTypeSelection"
                             onChange={this.handleChange}
                             value={this.state.base_item_type}>
@@ -186,7 +192,7 @@ class CreateItems extends Component{
                                 <label className="mr-1" htmlFor="itemTypeSelection">
                                     Item type
                                 </label>
-                                <select className="ml-1" 
+                                <select className="ml-1 form-control" 
                                 name="itemTypeSelection"
                                 onChange={this.handleChange}
                                 value={this.state.item_type}>
@@ -206,7 +212,7 @@ class CreateItems extends Component{
                                     <label htmlFor="baseArmorSelection">
                                         Base Armor
                                     </label>
-                                    <select
+                                    <select className=" form-control"
                                     name="baseArmorSelection"
                                     onChange={this.handleChange}
                                     value={this.state.base_armor}>
@@ -235,7 +241,7 @@ class CreateItems extends Component{
                                     <label htmlFor="dexBonusSelector">
                                         Dex Bonus
                                     </label>
-                                    <select
+                                    <select className=" form-control"
                                     name="dexBonusSelector"
                                     onChange={this.handleChange}
                                     value={this.state.dex_bonus}>
@@ -248,7 +254,8 @@ class CreateItems extends Component{
                                     <label htmlFor="strRequirementInput">
                                         Str Requirement
                                     </label>
-                                    <input name="strRequirementInput"
+                                    <input className=" form-control"
+                                    name="strRequirementInput"
                                     value={this.state.str_requirement}
                                     onChange={this.handleChange}/>
                                 </div>
@@ -256,7 +263,7 @@ class CreateItems extends Component{
                                     <label htmlFor="stealthCheckSelector">
                                         Stealth Check
                                     </label>
-                                    <select
+                                    <select className=" form-control"
                                     name="stealthCheckSelector"
                                     onChange={this.handleChange}
                                     value={this.state.stealth_check}>
@@ -271,7 +278,7 @@ class CreateItems extends Component{
                                     <label htmlFor="baseWeaponTypeSelector" className="m-1">
                                         Base Weapon Type
                                     </label>
-                                    <select className="m-1"
+                                    <select className="m-1  form-control"
                                     name="baseWeaponTypeSelector"
                                     onChange={this.handleChange}
                                     value={this.state.base_weapon_type}>
@@ -283,20 +290,133 @@ class CreateItems extends Component{
                                         <option value="advanced_ranged">Advanced Ranged</option>
                                     </select>
                                 </div>
+                                <div className="d-flex flex-row justify-content-center">
                                 {
-                                this.state.base_weapon_type.includes("melee") ?
-                                <div className="d-flex flex-row justify-content-center">
-                                    Melee Weapon
-                                </div> :
-                                <div className="d-flex flex-row justify-content-center">
-                                    Ranged Weapon
-                                </div>
+                                    this.state.base_weapon_type === "simple_melee" ?
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="baseWeaponSelector" className="m-1">
+                                            Simple Melee Weapon
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="baseWeaponSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                            <option value="any">Any</option>
+                                            <option value="club">Club</option>
+                                            <option value="dagger">Dagger</option>
+                                            <option value="greatclub">Greatclub</option>
+                                            <option value="handaxe">Handaxe</option>
+                                            <option value="javelin">Javelin</option>
+                                            <option value="light_hammer">Light Hammer</option>
+                                            <option value="mace">Mace</option>
+                                            <option value="quaterstaff">Quarterstaff</option>
+                                            <option value="sickle">Sickle</option>
+                                            <option value="spear">Spear</option>
+                                        </select>
+                                    </div> :
+                                    this.state.base_weapon_type === "simple_ranged" ?
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="baseWeaponSelector" className="m-1">
+                                            Simple Ranged Weapon
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="baseWeaponSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                            <option value="any">Any</option>
+                                            <option value="light_crossbow">Crossbow, light</option>
+                                            <option value="dart">Dart</option>
+                                            <option value="shrotbow">Shortbow</option>
+                                            <option value="sling">Sling</option>
+                                        </select>
+                                    </div> : 
+                                    this.state.base_weapon_type === "martial_melee" ?
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="baseWeaponSelector" className="m-1">
+                                            Martial Melee Weapon
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="baseWeaponSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                            <option value="any">Any</option>
+                                            <option value="battleaxe">Battleaxe</option>
+                                            <option value="flail">Flail</option>
+                                            <option value="glaive">Glaive</option>
+                                            <option value="greataxe">Greataxe</option>
+                                            <option value="greatsword">Greatsword</option>
+                                            <option value="haleberd">Haleberd</option>
+                                            <option value="lance">Lance</option>
+                                            <option value="longsword">Longsword</option>
+                                            <option value="maul">Maul</option>
+                                            <option value="morningstar">Morningstar</option>
+                                            <option value="pike">Pike</option>
+                                            <option value="rapier">Rapier</option>
+                                            <option value="scimitar">Scimitar</option>
+                                            <option value="shortsword">Shortsword</option>
+                                            <option value="trident">Trident</option>
+                                            <option value="war_pick">War Pick</option>
+                                            <option value="warhammer">Warhammer</option>
+                                            <option value="whip">Whip</option>
+                                        </select>
+                                    </div> :
+                                    this.state.base_weapon_type === "martial_ranged" ?
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="baseWeaponSelector" className="m-1">
+                                            Martial Ranged Weapon
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="baseWeaponSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                            <option value="any">Any</option>
+                                            <option value="hand_crossbow">Crossbow, hand</option>
+                                            <option value="heavy_crossbow">Crossbow, heavy</option>
+                                            <option value="longbow">Longbow</option>
+                                            <option value="net">Net</option>
+                                        </select>
+                                    </div> :
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="baseWeaponSelector" className="m-1">
+                                            Other Weapon
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="baseWeaponSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                            <option value="any">Any</option>
+                                        </select>
+                                    </div>
                                 }
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="weaponPropertiesSelector" className="m-1">
+                                            Weapon Properties
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="weaponPropertiesSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                            <option value="any">Any</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         }
                     </div>
                     <div>
-                        <input type="checkbox" name="attunementRequirementCheckBox"
+                        <input className=""
+                        type="checkbox" 
+                        name="attunementRequirementCheckBox"
                         onChange={this.handleChange}
                         value={this.state.attunement}/>
                         <label className="ml-1" htmlFor="attunementRequirementCheckBox">
@@ -305,7 +425,9 @@ class CreateItems extends Component{
                         {
                             this.state.attunement ?
                             <div>
-                                <input type='text' name="attunementDescriptionInput"
+                                <input className=" form-control"
+                                type='text' 
+                                name="attunementDescriptionInput"
                                 onChange={this.handleChange}
                                 value={this.state.attunement_description}/>
                             </div> : 
@@ -313,16 +435,19 @@ class CreateItems extends Component{
                         }
                     </div>
                     <div>
-                        <textarea name="itemDescriptionInput"
+                        <textarea className=" form-control"
+                        name="itemDescriptionInput"
                         onChange={this.handleChange}
                         value={this.state.description}/>
                     </div>
                     <div>
-                        <button type="submit"
+                        <button className="btn btn-dark"
+                        type="submit"
                         onClick={this.handleSubmit}>
                             Craft Item
                         </button>
-                        <button type="reset"
+                        <button className="btn btn-dark"
+                        type="reset"
                         onClick={this.resetItem}>
                             Scrap Item
                         </button>

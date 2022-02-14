@@ -129,16 +129,26 @@ describe('CreateItems', ()=>{
         expect(selectElement).toHaveLength(2);
     });
 
-    it('has 3 input elements renedered when attunement is true', ()=>{
-        ciWrapper.setState({attunement: true});
-        
-        const selectElement = ciWrapper.find('input');
-        expect(selectElement).toHaveLength(3);
+    it('has 2 button elements renedered', ()=>{
+        const selectElement = ciWrapper.find('button');
+        expect(selectElement).toHaveLength(2);
+    });
+
+    it('has 1 textarea element renedered', ()=>{
+        const selectElement = ciWrapper.find('textarea');
+        expect(selectElement).toHaveLength(1);
     });
 
     it('has 3 select elements renedered', ()=>{
         const selectElement = ciWrapper.find('select');
         
+        expect(selectElement).toHaveLength(3);
+    });
+
+    it('has 3 input elements renedered when attunement is true', ()=>{
+        ciWrapper.setState({attunement: true});
+        
+        const selectElement = ciWrapper.find('input');
         expect(selectElement).toHaveLength(3);
     });
 
@@ -156,18 +166,9 @@ describe('CreateItems', ()=>{
         ciWrapper.setState({base_item_type: 'weapon'});
         
         const selectElement = ciWrapper.find('select');
-        expect(selectElement).toHaveLength(3);
+        expect(selectElement).toHaveLength(5);
     });
 
-    it('has 2 button elements renedered', ()=>{
-        const selectElement = ciWrapper.find('button');
-        expect(selectElement).toHaveLength(2);
-    });
-
-    it('has 1 textarea element renedered', ()=>{
-        const selectElement = ciWrapper.find('textarea');
-        expect(selectElement).toHaveLength(1);
-    });
 });
 
 describe('ChangeFormLayout',()=>{
@@ -379,5 +380,48 @@ describe('ChangeFormLayout',()=>{
             target: {value: 'simple_ranged', name: "baseWeaponTypeSelector"}
         });
         expect(ciWrapper.state().base_weapon_type).toContain('simple_ranged');
+    });
+
+    it('changes base_weapon for simple_melee', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon'
+        });
+        ciWrapper.find('select').at(3).simulate('change',{
+            target: {value: 'club', name: "baseWeaponSelector"}
+        });
+        expect(ciWrapper.state().base_weapon).toContain('club');
+    });
+
+    it('changes base_weapon for simple_ranged', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon',
+            base_weapon_type: 'simple_ranged'
+        });
+        ciWrapper.find('select').at(3).simulate('change',{
+            target: {value: 'dart', name: "baseWeaponSelector"}
+        });
+        expect(ciWrapper.state().base_weapon).toContain('dart');
+    });
+
+    it('changes base_weapon for martial_melee', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon',
+            base_weapon_type: 'martial_melee'
+        });
+        ciWrapper.find('select').at(3).simulate('change',{
+            target: {value: 'flail', name: "baseWeaponSelector"}
+        });
+        expect(ciWrapper.state().base_weapon).toContain('flail');
+    });
+
+    it('changes base_weapon for martial_ranged', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon',
+            base_weapon_type: 'martial_ranged'
+        });
+        ciWrapper.find('select').at(3).simulate('change',{
+            target: {value: 'net', name: "baseWeaponSelector"}
+        });
+        expect(ciWrapper.state().base_weapon).toContain('net');
     });
 });
