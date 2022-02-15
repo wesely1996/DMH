@@ -126,7 +126,7 @@ describe('CreateItems', ()=>{
 
     it('has 2 input elements renedered', ()=>{
         const selectElement = ciWrapper.find('input');
-        expect(selectElement).toHaveLength(2);
+        expect(selectElement).toHaveLength(6);
     });
 
     it('has 2 button elements renedered', ()=>{
@@ -149,7 +149,7 @@ describe('CreateItems', ()=>{
         ciWrapper.setState({attunement: true});
         
         const selectElement = ciWrapper.find('input');
-        expect(selectElement).toHaveLength(3);
+        expect(selectElement).toHaveLength(7);
     });
 
     it('has 5 select and 4 input elements renedered when base_item_type is armor', ()=>{
@@ -159,14 +159,20 @@ describe('CreateItems', ()=>{
         expect(selectElement).toHaveLength(5);
         
         const inputElement = ciWrapper.find('input');
-        expect(inputElement).toHaveLength(4);
+        expect(inputElement).toHaveLength(8);
     });
 
-    it('has 5 select elements renedered when base_item_type is armor', ()=>{
-        ciWrapper.setState({base_item_type: 'weapon'});
+    it('has 6 select elements renedered when base_item_type is armor', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon',
+            attunement: false
+        });
         
         const selectElement = ciWrapper.find('select');
-        expect(selectElement).toHaveLength(5);
+        expect(selectElement).toHaveLength(6);
+
+        const inputElement = ciWrapper.find('input');
+        expect(inputElement).toHaveLength(8);
     });
 
 });
@@ -178,74 +184,94 @@ describe('ChangeFormLayout',()=>{
     });
 
     it('changes base_item_type to item by default', ()=>{
-        expect(ciWrapper.state().base_item_type).toContain('item');
+        expect(ciWrapper.state().base_item_type).toEqual('item');
     });
 
     it('changes base_item_type to armor when select changes', ()=>{
         ciWrapper.find('select').at(1).simulate('change',{
             target: {value: 'armor', name: 'baseItemTypeSelection'}
         });
-        expect(ciWrapper.state().base_item_type).toContain('armor');
+        expect(ciWrapper.state().base_item_type).toEqual('armor');
     });
 
     it('changes base_item_type to weapon when select changes', ()=>{
         ciWrapper.find('select').at(1).simulate('change',{
             target: {value: 'weapon', name: 'baseItemTypeSelection'}
         });
-        expect(ciWrapper.state().base_item_type).toContain('weapon');
+        expect(ciWrapper.state().base_item_type).toEqual('weapon');
     });
 
     it('changes rarity to common by default', ()=>{
-        expect(ciWrapper.state().rarity).toContain('common');
+        expect(ciWrapper.state().rarity).toEqual('common');
     });
 
     it('changes rarity to uncommon when select changes', ()=>{
         ciWrapper.find('select').at(0).simulate('change',{
             target: {value: 'uncommon', name: 'raritySelect'}
         });
-        expect(ciWrapper.state().rarity).toContain('uncommon');
+        expect(ciWrapper.state().rarity).toEqual('uncommon');
     });
 
     it('changes rarity to rare when select changes', ()=>{
         ciWrapper.find('select').at(0).simulate('change',{
             target: {value: 'rare', name: 'raritySelect'}
         });
-        expect(ciWrapper.state().rarity).toContain('rare');
+        expect(ciWrapper.state().rarity).toEqual('rare');
     });
 
     it('changes rarity to very_rare when select changes', ()=>{
         ciWrapper.find('select').at(0).simulate('change',{
             target: {value: 'very_rare', name: 'raritySelect'}
         });
-        expect(ciWrapper.state().rarity).toContain('very_rare');
+        expect(ciWrapper.state().rarity).toEqual('very_rare');
     });
 
     it('changes rarity to legendary when select changes', ()=>{
         ciWrapper.find('select').at(0).simulate('change',{
             target: {value: 'legendary', name: 'raritySelect'}
         });
-        expect(ciWrapper.state().rarity).toContain('legendary');
+        expect(ciWrapper.state().rarity).toEqual('legendary');
     });
 
     it('changes rarity to artifact when select changes', ()=>{
         ciWrapper.find('select').at(0).simulate('change',{
             target: {value: 'artifact', name: 'raritySelect'}
         });
-        expect(ciWrapper.state().rarity).toContain('artifact');
+        expect(ciWrapper.state().rarity).toEqual('artifact');
     });
 
     it('changes rarity to unique when select changes', ()=>{
         ciWrapper.find('select').at(0).simulate('change',{
             target: {value: 'unique', name: 'raritySelect'}
         });
-        expect(ciWrapper.state().rarity).toContain('unique');
+        expect(ciWrapper.state().rarity).toEqual('unique');
     });
 
     it('changes name when nameInput changes', ()=>{
         ciWrapper.find('input').at(0).simulate('change', {
             target: {value: 'Item Name', name: "nameInput"}
         });
-        expect(ciWrapper.state().name).toContain('Item Name');
+        expect(ciWrapper.state().name).toEqual('Item Name');
+    });
+
+    it('changes weight', ()=>{
+        ciWrapper.find('input').at(1).simulate('change', {
+            target: {value: 130, name: "weightInput"}
+        });
+        expect(ciWrapper.state().weight).toEqual(130);
+    });
+
+    it('changes price', ()=>{
+        ciWrapper.find('input').at(2).simulate('change', {
+            target: {value: 5, name: "goldInput"}
+        });
+        ciWrapper.find('input').at(3).simulate('change', {
+            target: {value: 7, name: "silverInput"}
+        });
+        ciWrapper.find('input').at(4).simulate('change', {
+            target: {value: 3, name: "copperInput"}
+        });
+        expect(ciWrapper.state().price).toEqual([5,7,3]);
     });
 
     it('changes item_type to ammunition when select changes', ()=>{
@@ -253,36 +279,36 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(2).simulate('change',{
             target: {value: 'ammunition', name: "itemTypeSelection"}
         });
-        expect(ciWrapper.state().item_type).toContain('ammunition');
+        expect(ciWrapper.state().item_type).toEqual('ammunition');
     });
 
     it('change attunement when attunementRequirementCheckBox is checked',()=>{
-        ciWrapper.find('input').at(1).simulate('change', {
+        ciWrapper.find('input').at(5).simulate('change', {
             target: {checked: true, name: "attunementRequirementCheckBox"}
         });
         expect(ciWrapper.state().attunement).toBeTruthy();
     });
 
     it('change attunement when attunementRequirementCheckBox is toggled',()=>{
-        ciWrapper.find('input').at(1).simulate('change', {
+        ciWrapper.find('input').at(5).simulate('change', {
             target: {checked: true, name: "attunementRequirementCheckBox"}
         });
-        ciWrapper.find('input').at(1).simulate('change', {
+        ciWrapper.find('input').at(5).simulate('change', {
             target: {checked: false, name: "attunementRequirementCheckBox"}
         });
         expect(ciWrapper.state().attunement).not.toBeTruthy();
     });
 
     it('change attunement when attunementRequirementCheckBox is checked',()=>{
-        ciWrapper.find('input').at(1).simulate('change', {
+        ciWrapper.find('input').at(5).simulate('change', {
             target: {checked: true, name: "attunementRequirementCheckBox"}
         });
         const desc = "Attunement is done through holding the item for 1 minute";
-        ciWrapper.find('input').at(2).simulate('change',{
+        ciWrapper.find('input').at(6).simulate('change',{
             target: {value: desc,
                     name: "attunementDescriptionInput"}
         });
-        expect(ciWrapper.state().attunement_description).toContain(desc);
+        expect(ciWrapper.state().attunement_description).toEqual(desc);
     });
 
     it('changes description when itemDescriptionInput changes', ()=>{
@@ -290,7 +316,7 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('textarea').at(0).simulate('change', {
             target: {value: desc, name: "itemDescriptionInput"}
         });
-        expect(ciWrapper.state().description).toContain(desc);
+        expect(ciWrapper.state().description).toEqual(desc);
     });
 
     it('resets item on Scrap item clicked', ()=>{
@@ -326,24 +352,24 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('button').at(1).simulate('click');
         const ciState = ciWrapper.state();
         expect(ciState.name).toEqual("");
-        expect(ciState.rarity).toContain("common");
+        expect(ciState.rarity).toEqual("common");
         expect(ciState.attunement).toBeFalsy();
         expect(ciState.attunement_description).toEqual("");
         expect(ciState.description).toEqual("");
-        expect(ciState.base_item_type).toContain("item");
-        expect(ciState.item_type).toContain("wonderous_items");
-        expect(ciState.base_armor).toContain("any");
-        expect(ciState.dex_bonus).toContain("none");
+        expect(ciState.base_item_type).toEqual("item");
+        expect(ciState.item_type).toEqual("wonderous_items");
+        expect(ciState.base_armor).toEqual("any");
+        expect(ciState.dex_bonus).toEqual("none");
         expect(ciState.str_requirement).toEqual(0);
-        expect(ciState.stealth_check).toContain("none");
-        expect(ciState.base_weapon_type).toContain("simple_melee");
-        expect(ciState.base_weapon).toContain("any");
+        expect(ciState.stealth_check).toEqual("none");
+        expect(ciState.base_weapon_type).toEqual("simple_melee");
+        expect(ciState.base_weapon).toEqual("any");
         expect(ciState.weapon_properties).toEqual([]);
         expect(ciState.weapon_damage).toEqual([1, 4]);
         expect(ciState.weapon_range).toEqual(5);
         expect(ciState.has_charges).toBeFalsy();
         expect(ciState.number_of_charges).toEqual(0);
-        expect(ciState.charges_reset_condition).toContain("none");
+        expect(ciState.charges_reset_condition).toEqual("none");
         expect(ciState.charges_reset_description).toEqual("");
         expect(ciState.weight).toEqual(0);
         expect(ciState.price).toEqual([0,0,0]);
@@ -361,17 +387,17 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(3).simulate('change',{
             target: {value: 'max2', name: "dexBonusSelector"}
         });
-        ciWrapper.find('input').at(2).simulate('change',{
+        ciWrapper.find('input').at(6).simulate('change',{
             target: {value: 5, name: "strRequirementInput"}
         });
         ciWrapper.find('select').at(4).simulate('change',{
             target: {value: 'advantage', name: "stealthCheckSelector"}
         });
 
-        expect(ciWrapper.state().base_armor).toContain('light');
-        expect(ciWrapper.state().dex_bonus).toContain('max2');
+        expect(ciWrapper.state().base_armor).toEqual('light');
+        expect(ciWrapper.state().dex_bonus).toEqual('max2');
         expect(ciWrapper.state().str_requirement).toEqual(5);
-        expect(ciWrapper.state().stealth_check).toContain('advantage');
+        expect(ciWrapper.state().stealth_check).toEqual('advantage');
     });
 
     it('changes base_item_type to weapon and then changes selections', ()=>{
@@ -379,7 +405,7 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(2).simulate('change',{
             target: {value: 'simple_ranged', name: "baseWeaponTypeSelector"}
         });
-        expect(ciWrapper.state().base_weapon_type).toContain('simple_ranged');
+        expect(ciWrapper.state().base_weapon_type).toEqual('simple_ranged');
     });
 
     it('changes base_weapon for simple_melee', ()=>{
@@ -389,7 +415,7 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(3).simulate('change',{
             target: {value: 'club', name: "baseWeaponSelector"}
         });
-        expect(ciWrapper.state().base_weapon).toContain('club');
+        expect(ciWrapper.state().base_weapon).toEqual('club');
     });
 
     it('changes base_weapon for simple_ranged', ()=>{
@@ -400,7 +426,7 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(3).simulate('change',{
             target: {value: 'dart', name: "baseWeaponSelector"}
         });
-        expect(ciWrapper.state().base_weapon).toContain('dart');
+        expect(ciWrapper.state().base_weapon).toEqual('dart');
     });
 
     it('changes base_weapon for martial_melee', ()=>{
@@ -411,7 +437,7 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(3).simulate('change',{
             target: {value: 'flail', name: "baseWeaponSelector"}
         });
-        expect(ciWrapper.state().base_weapon).toContain('flail');
+        expect(ciWrapper.state().base_weapon).toEqual('flail');
     });
 
     it('changes base_weapon for martial_ranged', ()=>{
@@ -422,6 +448,48 @@ describe('ChangeFormLayout',()=>{
         ciWrapper.find('select').at(3).simulate('change',{
             target: {value: 'net', name: "baseWeaponSelector"}
         });
-        expect(ciWrapper.state().base_weapon).toContain('net');
+        expect(ciWrapper.state().base_weapon).toEqual('net');
+    });
+
+    it('selects multiple weapon_properties', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon',
+            base_weapon_type: 'martial_ranged'
+        });
+        ciWrapper.find('select').at(4).simulate('change',{
+            target: {value: 'ammunition', name: "weaponPropertiesSelector"}
+        });
+        ciWrapper.find('select').at(4).simulate('change',{
+            target: {value: 'finesse', name: "weaponPropertiesSelector"}
+        });
+        expect(ciWrapper.state().weapon_properties).toEqual(['ammunition', 'finesse']);
+
+        ciWrapper.find('select').at(4).simulate('change',{
+            target: {value: 'finesse', name: "weaponPropertiesSelector"}
+        });
+        expect(ciWrapper.state().weapon_properties).toEqual(['ammunition']);
+    });
+
+    it('selects weapon_damage', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon'
+        });
+        ciWrapper.find('input').at(6).simulate('change',{
+            target: {value: 2, name: "diceNumberInput"}
+        });
+        ciWrapper.find('select').at(5).simulate('change',{
+            target: {value: 8, name: "weaponDiceSelector"}
+        });
+        expect(ciWrapper.state().weapon_damage).toEqual([2,8]);
+    });
+
+    it('inputs weapon_range', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'weapon'
+        });
+        ciWrapper.find('input').at(7).simulate('change',{
+            target: {value: 120, name: "weaponRangeInput"}
+        });
+        expect(ciWrapper.state().weapon_range).toEqual(120);
     });
 });

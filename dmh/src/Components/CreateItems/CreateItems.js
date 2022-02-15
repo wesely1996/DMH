@@ -94,6 +94,33 @@ class CreateItems extends Component{
             case "baseWeaponSelector":
                 this.setState({base_weapon: event.target.value});
                 break;
+            case "weaponPropertiesSelector":
+                const index = this.state.weapon_properties.indexOf(event.target.value);
+                if(index > -1)
+                    this.state.weapon_properties.splice(index, 1);
+                else
+                    this.state.weapon_properties.push(event.target.value);
+                break;
+            case "diceNumberInput":
+                this.state.weapon_damage[0] = event.target.value;
+                break;
+            case "weaponDiceSelector":
+                this.state.weapon_damage[1] = event.target.value;
+                break;
+            case "weaponRangeInput":
+                this.setState({weapon_range: event.target.value});
+            case "weightInput":
+                this.setState({weight: event.target.value});
+                break;
+            case "goldInput":
+                this.state.price[0] = event.target.value;
+                break;
+            case "silverInput":
+                this.state.price[1] = event.target.value;
+                break;
+            case "copperInput":
+                this.state.price[2] = event.target.value;
+                break;
             default:
                 break;
         }
@@ -144,18 +171,55 @@ class CreateItems extends Component{
                     id='forgeName'>
                         <strong>FORGE</strong>
                     </h2>
-                    <div>
-                        <label className="mr-1" htmlFor="nameInput">
-                            Name 
-                        </label>
-                        <input className="ml-1 form-control" 
-                        type="text" 
-                        name="nameInput"
-                        value={this.state.name}
-                        onChange={this.handleChange}/>
+                    <div className="d-flex flex-row justify-content-center">
+                        <div className="d-flex flex-column w-50">
+                            <label className="" htmlFor="nameInput">
+                                Name 
+                            </label>
+                            <input className="form-control" 
+                            type="text" 
+                            name="nameInput"
+                            value={this.state.name}
+                            onChange={this.handleChange}/>
+                        </div>
+                        <div className="d-flex flex-row w-50">
+                            <div className="d-flex flex-column w-50">
+                                <label className="" htmlFor="weightInput">
+                                    Weight 
+                                </label>
+                                <input className="form-control" 
+                                type="text" 
+                                name="weightInput"
+                                value={this.state.weight}
+                                onChange={this.handleChange}/>
+                            </div>
+                            <div className="d-flex flex-column w-50">
+                                <label className="" htmlFor="priceInput">
+                                    Price 
+                                </label>
+                                <div name="priceInput" 
+                                className="d-flex flex-row">
+                                    <input className="form-control" 
+                                    type="text" 
+                                    name="goldInput"
+                                    value={this.state.price[0]}
+                                    onChange={this.handleChange}/>
+                                    <input className="form-control" 
+                                    type="text" 
+                                    name="silverInput"
+                                    value={this.state.price[1]}
+                                    onChange={this.handleChange}/>
+                                    <input className="form-control" 
+                                    type="text" 
+                                    name="copperInput"
+                                    value={this.state.price[2]}
+                                    onChange={this.handleChange}/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="d-flex flex-row justify-content-center">
-                        <div className="p-1">
+                        <div className="d-flex flex-column">
                             <label className="mr-1" htmlFor="raritySelect">
                                 Rarity 
                             </label>
@@ -172,7 +236,7 @@ class CreateItems extends Component{
                                 <option value="unique">Unique</option>
                             </select>
                         </div>
-                        <div className="p-1">
+                        <div className="d-flex flex-column">
                             <label className="mr-1" htmlFor="baseItemTypeSelection">
                                 Base Item Type 
                             </label>
@@ -395,19 +459,58 @@ class CreateItems extends Component{
                                         <select className="m-1 form-control"
                                         name="weaponPropertiesSelector"
                                         onChange={this.handleChange}
-                                        value={this.state.base_weapon}>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
-                                            <option value="any">Any</option>
+                                        value={this.state.weapon_properties}
+                                        multiple={true}>
+                                            <option value="ammunition">Ammunition</option>
+                                            <option value="finesse">Finesse</option>
+                                            <option value="heavy">Heavy</option>
+                                            <option value="light">Light</option>
+                                            <option value="loading">Loading</option>
+                                            <option value="range">Range</option>
+                                            <option value="reach">Reach</option>
+                                            <option value="special">Special</option>
+                                            <option value="thrown">Thrown</option>
+                                            <option value="two_handed">Two-Handed</option>
+                                            <option value="versatile">Versatile</option>
+                                            <option value="improvised_weapon">Improvised Weapon</option>
+                                            <option value="silvered_weapon">Silvered Weapon</option>
+                                            <option value="lance">Lance</option>
+                                            <option value="net">Net</option>
                                         </select>
+                                    </div>
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="weaponDamageSelector" className="m-1">
+                                            Damage
+                                        </label>
+                                        <div name="weaponDamageSelector" 
+                                        className="d-flex flex-row justify-content-center">
+                                            <input className="m-1 form-control"
+                                            name="diceNumberInput"
+                                            onChange={this.handleChange}
+                                            value={this.state.weapon_damage[0]}/>
+                                            <select className="m-1 form-control"
+                                            name="weaponDiceSelector"
+                                            onChange={this.handleChange}
+                                            value={this.state.weapon_damage[1]}>
+                                                <option value={4}>4</option>
+                                                <option value={6}>6</option>
+                                                <option value={8}>8</option>
+                                                <option value={10}>10</option>
+                                                <option value={12}>12</option>
+                                                <option value={20}>20</option>
+                                                <option value={100}>100</option>
+                                                <option value={1}>Fixed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="weaponRangeInput" className="m-1">
+                                            Range
+                                        </label>
+                                        <input className="m-1 form-control"
+                                        name="weaponRangeInput"
+                                        onChange={this.handleChange}
+                                        value={this.state.weapon_range}/>
                                     </div>
                                 </div>
                             </div>
