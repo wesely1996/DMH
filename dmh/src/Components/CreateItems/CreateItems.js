@@ -127,6 +127,12 @@ class CreateItems extends Component{
                 new_copper_price[2] = event.target.value;
                 this.setState({price : new_copper_price});
                 break;
+            case "hasChargesCheckBox":
+                this.setState({has_charges: event.target.checked});
+                break;
+            case "chargesResetConditionSelect":
+                this.setState({charges_reset_condition: event.target.value});
+                break;
             default:
                 break;
         }
@@ -522,23 +528,86 @@ class CreateItems extends Component{
                             </div>
                         }
                     </div>
-                    <div>
-                        <input className=""
-                        type="checkbox" 
-                        name="attunementRequirementCheckBox"
-                        onChange={this.handleChange}
-                        value={this.state.attunement}/>
-                        <label className="ml-1" htmlFor="attunementRequirementCheckBox">
-                            Attunement Required
-                        </label>
+                    <div className="d-flex flex-row justify-content-center">
+                        <div className="d-flex flex-row">
+                            <input className=""
+                            type="checkbox" 
+                            name="attunementRequirementCheckBox"
+                            onChange={this.handleChange}
+                            value={this.state.attunement}/>
+                            <label className="ml-1" htmlFor="attunementRequirementCheckBox">
+                                Attunement Required
+                            </label>
+                        </div>
                         {
                             this.state.attunement ?
-                            <div>
-                                <input className=" form-control"
+                            <div className="d-flex flex-row ml-1">
+                                <input className="form-control"
                                 type='text' 
                                 name="attunementDescriptionInput"
                                 onChange={this.handleChange}
                                 value={this.state.attunement_description}/>
+                                <label className="ml-1" htmlFor="attunementDescriptionInput">
+                                    Attunement Description
+                                </label>
+                            </div> : 
+                            <></>
+                        }
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                        <div className="d-flex flex-row justify-content-center">
+                            <input className=""
+                            type="checkbox" 
+                            name="hasChargesCheckBox"
+                            onChange={this.handleChange}
+                            value={this.state.has_charges}/>
+                            <label className="ml-1" htmlFor="hasChargesCheckBox">
+                                Has Charges
+                            </label>
+                        </div>
+                        {
+                            this.state.has_charges ?
+                            <div className="d-flex flex-row ml-1 justify-content-center">
+                                <div className="d-flex flex-column justify-content-center">
+                                    <label className="ml-1" htmlFor="numberOfChargesInput">
+                                        Number Of Charges
+                                    </label>
+                                    <input className="form-control"
+                                    type="text" 
+                                    name="numberOfChargesInput"
+                                    onChange={this.handleChange}
+                                    value={this.state.number_of_charges}/>
+                                </div>
+                                <div className="d-flex flex-column justify-content-center">
+                                    <label className="" htmlFor="numberOfChargesInput">
+                                        Reset Condition
+                                    </label>
+                                    <select className="form-control"
+                                    type="text" 
+                                    name="chargesResetConditionSelect"
+                                    onChange={this.handleChange}
+                                    value={this.state.charges_reset_condition}>
+                                        <option value="none">None, Consumable</option>
+                                        <option value="dawn">Dawn</option>
+                                        <option value="short_rest">Short Rest</option>
+                                        <option value="long_rest">Long Rest</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                {
+                                    this.state.charges_reset_condition === "other" ?
+                                    <div className="d-flex flex-column justify-content-center w-50">
+                                        <label className="" htmlFor="ChargesResetDescriptionInput">
+                                            Reset Description
+                                        </label>
+                                        <input className="form-control"
+                                        type="text" 
+                                        name="ChargesResetDescriptionInput"
+                                        onChange={this.handleChange}
+                                        value={this.state.charges_reset_description}/>
+                                    </div> :
+                                    <></>
+                                }
                             </div> : 
                             <></>
                         }

@@ -4,6 +4,8 @@ import CreateItems from './CreateItems';
 describe('CreateItems', ()=>{
     let ciWrapper;
     let ciState;
+    const base_num_inputs = 7;
+    const base_num_select = 3;
     beforeAll(() => {
         ciWrapper = shallow(<CreateItems/>);
         ciState = ciWrapper.state();
@@ -126,7 +128,7 @@ describe('CreateItems', ()=>{
 
     it('has 2 input elements renedered', ()=>{
         const selectElement = ciWrapper.find('input');
-        expect(selectElement).toHaveLength(6);
+        expect(selectElement).toHaveLength(base_num_inputs);
     });
 
     it('has 2 button elements renedered', ()=>{
@@ -142,37 +144,60 @@ describe('CreateItems', ()=>{
     it('has 3 select elements renedered', ()=>{
         const selectElement = ciWrapper.find('select');
         
-        expect(selectElement).toHaveLength(3);
+        expect(selectElement).toHaveLength(base_num_select);
     });
 
     it('has 3 input elements renedered when attunement is true', ()=>{
         ciWrapper.setState({attunement: true});
         
         const selectElement = ciWrapper.find('input');
-        expect(selectElement).toHaveLength(7);
+        expect(selectElement).toHaveLength(base_num_inputs+1);
     });
 
     it('has 5 select and 4 input elements renedered when base_item_type is armor', ()=>{
         ciWrapper.setState({base_item_type: 'armor'});
         
         const selectElement = ciWrapper.find('select');
-        expect(selectElement).toHaveLength(5);
+        expect(selectElement).toHaveLength(base_num_select+2);
         
         const inputElement = ciWrapper.find('input');
-        expect(inputElement).toHaveLength(8);
+        expect(inputElement).toHaveLength(base_num_inputs+2);
     });
 
-    it('has 6 select elements renedered when base_item_type is armor', ()=>{
+    it('has 6 select and 9 input elements renedered when base_item_type is armor', ()=>{
         ciWrapper.setState({
             base_item_type: 'weapon',
             attunement: false
         });
         
         const selectElement = ciWrapper.find('select');
-        expect(selectElement).toHaveLength(6);
+        expect(selectElement).toHaveLength(base_num_select+3);
 
         const inputElement = ciWrapper.find('input');
-        expect(inputElement).toHaveLength(8);
+        expect(inputElement).toHaveLength(base_num_inputs+2);
+    });
+
+    it('has 7 input and 4 select elements renedered when it has charges', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'item',
+            has_charges: true
+        });
+        
+        const inputElement = ciWrapper.find('input');
+        expect(inputElement).toHaveLength(base_num_inputs+1);
+        const selectElement = ciWrapper.find('select');
+        expect(selectElement).toHaveLength(base_num_select+1);
+    });
+
+    it('has 8 input elements renedered when it has charges', ()=>{
+        ciWrapper.setState({
+            base_item_type: 'item',
+            has_charges: true,
+            charges_reset_condition: 'other'
+        });
+        
+        const inputElement = ciWrapper.find('input');
+        expect(inputElement).toHaveLength(base_num_inputs+2);
     });
 
 });
