@@ -102,10 +102,10 @@ class CreateItems extends Component{
                     this.state.weapon_properties.push(event.target.value);
                 break;
             case "diceNumberInput":
-                this.state.weapon_damage[0] = event.target.value;
+                this.setState({weapon_damage : [event.target.value, this.state.weapon_damage[1]]});
                 break;
             case "weaponDiceSelector":
-                this.state.weapon_damage[1] = event.target.value;
+                this.setState({weapon_damage : [this.state.weapon_damage[0], event.target.value]});
                 break;
             case "weaponRangeInput":
                 this.setState({weapon_range: event.target.value});
@@ -113,13 +113,19 @@ class CreateItems extends Component{
                 this.setState({weight: event.target.value});
                 break;
             case "goldInput":
-                this.state.price[0] = event.target.value;
+                let new_gold_price = this.state.price;
+                new_gold_price[0] = event.target.value;
+                this.setState({price : new_gold_price});
                 break;
             case "silverInput":
-                this.state.price[1] = event.target.value;
+                let new_silver_price = this.state.price;
+                new_silver_price[1] = event.target.value;
+                this.setState({price : new_silver_price});
                 break;
             case "copperInput":
-                this.state.price[2] = event.target.value;
+                let new_copper_price = this.state.price;
+                new_copper_price[2] = event.target.value;
+                this.setState({price : new_copper_price});
                 break;
             default:
                 break;
