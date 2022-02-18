@@ -1,5 +1,7 @@
 import {React, Component } from "react";
 import './CreateItems.css';
+import rarityOptions from '../../database/rarity.json';
+import itemTypes from '../../database/itemTypes.json';
 
 class CreateItems extends Component{
     constructor(props) {
@@ -239,13 +241,15 @@ class CreateItems extends Component{
                             name="raritySelect"
                             onChange={this.handleChange}
                             value={this.state.rarity}>
-                                <option value="common">Common</option>
-                                <option value="uncommon">Uncommon</option>
-                                <option value="rare">Rare</option>
-                                <option value="very_rare">Very Rare</option>
-                                <option value="legendary">Legendary</option>
-                                <option value="artifact">Artifact</option>
-                                <option value="unique">Unique</option>
+                                {
+                                    rarityOptions.map((option, index) =>{
+                                        return(
+                                            <option value={option.value} key={index}>
+                                                {option.name}
+                                            </option>
+                                        );
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="d-flex flex-column">
@@ -256,9 +260,15 @@ class CreateItems extends Component{
                             name="baseItemTypeSelection"
                             onChange={this.handleChange}
                             value={this.state.base_item_type}>
-                                <option value="item">Item</option>
-                                <option value="armor">Armor</option>
-                                <option value="weapon">Weapon</option>
+                                {
+                                    itemTypes.map((option, index) =>{
+                                        return(
+                                            <option value={option.type_tag} key={index}>
+                                                {option.type_name}
+                                            </option>
+                                        );
+                                    })
+                                }
                             </select>
                         </div>
                     </div>
@@ -272,14 +282,15 @@ class CreateItems extends Component{
                                 name="itemTypeSelection"
                                 onChange={this.handleChange}
                                 value={this.state.item_type}>
-                                    <option value="wonderous_items">Wonderous Items</option>
-                                    <option value="ammunition">Ammunition</option>
-                                    <option value="potions">Potions</option>
-                                    <option value="rods">Rods</option>
-                                    <option value="scrolls">Scrolls</option>
-                                    <option value="staffs">Staffs</option>
-                                    <option value="wands">Wands</option>
-                                    <option value="rings">Rings</option>
+                                    {
+                                        itemTypes[0].sub_type.map((option, index) =>{
+                                            return(
+                                                <option value={option.subtype_tag} key={index}>
+                                                    {option.subtype_name}
+                                                </option>
+                                            );
+                                        })
+                                    }
                                 </select>
                             </div> : 
                         this.state.base_item_type === "armor" ?
@@ -292,25 +303,15 @@ class CreateItems extends Component{
                                     name="baseArmorSelection"
                                     onChange={this.handleChange}
                                     value={this.state.base_armor}>
-                                        <option value="any">Any</option>
-                                        <option value="light">Light</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="heavy">Heavy</option>
-                                        <option value="light_medium">Light or Medium</option>
-                                        <option value="medium_heavy">Medium or Heavy</option>
-                                        <option value="padded">Padded</option>
-                                        <option value="leather">Leather</option>
-                                        <option value="studded_leather">Studded Leather</option>
-                                        <option value="hide">Hide</option>
-                                        <option value="chain_shirt">Chain shirt</option>
-                                        <option value="scale_mail">Scale mail</option>
-                                        <option value="breastplate">Breastplate</option>
-                                        <option value="half_plate">Half Plate</option>
-                                        <option value="ring_mail">Ring Mail</option>
-                                        <option value="chain_mail">Chain Mail</option>
-                                        <option value="splint">Splint</option>
-                                        <option value="plate">Plate</option>
-                                        <option value="shield">Shield</option>
+                                        {
+                                            itemTypes[1].sub_type.map((option, index) =>{
+                                                return(
+                                                    <option value={option.subtype_tag} key={index}>
+                                                        {option.subtype_name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                     </select>
                                 </div>
                                 <div className="d-flex flex-column">
@@ -358,12 +359,15 @@ class CreateItems extends Component{
                                     name="baseWeaponTypeSelector"
                                     onChange={this.handleChange}
                                     value={this.state.base_weapon_type}>
-                                        <option value="simple_melee">Simple Melee</option>
-                                        <option value="simple_ranged">Simple Ranged</option>
-                                        <option value="martial_melee">Martial Melee</option>
-                                        <option value="martial_ranged">Martial Ranged</option>
-                                        <option value="advanced_melee">Advanced Melee</option>
-                                        <option value="advanced_ranged">Advanced Ranged</option>
+                                        {
+                                            itemTypes[2].sub_type.map((option, index) =>{
+                                                return(
+                                                    <option value={option.subtype_tag} key={index}>
+                                                        {option.subtype_name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                     </select>
                                 </div>
                                 <div className="d-flex flex-row justify-content-center">
@@ -377,17 +381,15 @@ class CreateItems extends Component{
                                         name="baseWeaponSelector"
                                         onChange={this.handleChange}
                                         value={this.state.base_weapon}>
-                                            <option value="any">Any</option>
-                                            <option value="club">Club</option>
-                                            <option value="dagger">Dagger</option>
-                                            <option value="greatclub">Greatclub</option>
-                                            <option value="handaxe">Handaxe</option>
-                                            <option value="javelin">Javelin</option>
-                                            <option value="light_hammer">Light Hammer</option>
-                                            <option value="mace">Mace</option>
-                                            <option value="quaterstaff">Quarterstaff</option>
-                                            <option value="sickle">Sickle</option>
-                                            <option value="spear">Spear</option>
+                                        {
+                                            itemTypes[2].sub_type[0].base_weapons.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                         </select>
                                     </div> :
                                     this.state.base_weapon_type === "simple_ranged" ?
@@ -399,11 +401,15 @@ class CreateItems extends Component{
                                         name="baseWeaponSelector"
                                         onChange={this.handleChange}
                                         value={this.state.base_weapon}>
-                                            <option value="any">Any</option>
-                                            <option value="light_crossbow">Crossbow, light</option>
-                                            <option value="dart">Dart</option>
-                                            <option value="shrotbow">Shortbow</option>
-                                            <option value="sling">Sling</option>
+                                        {
+                                            itemTypes[2].sub_type[1].base_weapons.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                         </select>
                                     </div> : 
                                     this.state.base_weapon_type === "martial_melee" ?
@@ -415,25 +421,15 @@ class CreateItems extends Component{
                                         name="baseWeaponSelector"
                                         onChange={this.handleChange}
                                         value={this.state.base_weapon}>
-                                            <option value="any">Any</option>
-                                            <option value="battleaxe">Battleaxe</option>
-                                            <option value="flail">Flail</option>
-                                            <option value="glaive">Glaive</option>
-                                            <option value="greataxe">Greataxe</option>
-                                            <option value="greatsword">Greatsword</option>
-                                            <option value="haleberd">Haleberd</option>
-                                            <option value="lance">Lance</option>
-                                            <option value="longsword">Longsword</option>
-                                            <option value="maul">Maul</option>
-                                            <option value="morningstar">Morningstar</option>
-                                            <option value="pike">Pike</option>
-                                            <option value="rapier">Rapier</option>
-                                            <option value="scimitar">Scimitar</option>
-                                            <option value="shortsword">Shortsword</option>
-                                            <option value="trident">Trident</option>
-                                            <option value="war_pick">War Pick</option>
-                                            <option value="warhammer">Warhammer</option>
-                                            <option value="whip">Whip</option>
+                                        {
+                                            itemTypes[2].sub_type[2].base_weapons.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                         </select>
                                     </div> :
                                     this.state.base_weapon_type === "martial_ranged" ?
@@ -445,22 +441,54 @@ class CreateItems extends Component{
                                         name="baseWeaponSelector"
                                         onChange={this.handleChange}
                                         value={this.state.base_weapon}>
-                                            <option value="any">Any</option>
-                                            <option value="hand_crossbow">Crossbow, hand</option>
-                                            <option value="heavy_crossbow">Crossbow, heavy</option>
-                                            <option value="longbow">Longbow</option>
-                                            <option value="net">Net</option>
+                                        {
+                                            itemTypes[2].sub_type[3].base_weapons.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                         </select>
-                                    </div> :
+                                    </div> : 
+                                    this.state.base_weapon_type === "martial_ranged" ?
                                     <div className="d-flex flex-column justify-content-center">
                                         <label htmlFor="baseWeaponSelector" className="m-1">
-                                            Other Weapon
+                                            Advanced Melee Weapon
                                         </label>
                                         <select className="m-1 form-control"
                                         name="baseWeaponSelector"
                                         onChange={this.handleChange}
                                         value={this.state.base_weapon}>
-                                            <option value="any">Any</option>
+                                        {
+                                            itemTypes[2].sub_type[4].base_weapons.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
+                                        </select>
+                                    </div> :
+                                    <div className="d-flex flex-column justify-content-center">
+                                        <label htmlFor="baseWeaponSelector" className="m-1">
+                                            Advanced Ranged Weapon
+                                        </label>
+                                        <select className="m-1 form-control"
+                                        name="baseWeaponSelector"
+                                        onChange={this.handleChange}
+                                        value={this.state.base_weapon}>
+                                        {
+                                            itemTypes[2].sub_type[5].base_weapons.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                         </select>
                                     </div>
                                 }
