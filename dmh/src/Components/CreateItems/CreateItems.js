@@ -2,6 +2,7 @@ import {React, Component } from "react";
 import './CreateItems.css';
 import rarityOptions from '../../database/rarity.json';
 import itemTypes from '../../database/itemTypes.json';
+import weaponProperties from '../../database/weaponProperties.json';
 
 class CreateItems extends Component{
     constructor(props) {
@@ -501,21 +502,15 @@ class CreateItems extends Component{
                                         onChange={this.handleChange}
                                         value={this.state.weapon_properties}
                                         multiple={true}>
-                                            <option value="ammunition">Ammunition</option>
-                                            <option value="finesse">Finesse</option>
-                                            <option value="heavy">Heavy</option>
-                                            <option value="light">Light</option>
-                                            <option value="loading">Loading</option>
-                                            <option value="range">Range</option>
-                                            <option value="reach">Reach</option>
-                                            <option value="special">Special</option>
-                                            <option value="thrown">Thrown</option>
-                                            <option value="two_handed">Two-Handed</option>
-                                            <option value="versatile">Versatile</option>
-                                            <option value="improvised_weapon">Improvised Weapon</option>
-                                            <option value="silvered_weapon">Silvered Weapon</option>
-                                            <option value="lance">Lance</option>
-                                            <option value="net">Net</option>
+                                        {
+                                            weaponProperties.map((option, index) =>{
+                                                return(
+                                                    <option value={option.tag} key={index}>
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                         </select>
                                     </div>
                                     <div className="d-flex flex-column justify-content-center">
