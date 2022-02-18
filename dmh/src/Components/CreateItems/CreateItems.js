@@ -112,6 +112,7 @@ class CreateItems extends Component{
                 break;
             case "weaponRangeInput":
                 this.setState({weapon_range: event.target.value});
+                break;
             case "weightInput":
                 this.setState({weight: event.target.value});
                 break;
@@ -135,6 +136,9 @@ class CreateItems extends Component{
                 break;
             case "chargesResetConditionSelect":
                 this.setState({charges_reset_condition: event.target.value});
+                break;
+            case "numberOfChargesInput":
+                this.setState({number_of_charges: event.target.value});
                 break;
             default:
                 break;
@@ -602,7 +606,7 @@ class CreateItems extends Component{
                                     value={this.state.number_of_charges}/>
                                 </div>
                                 <div className="d-flex flex-column justify-content-center">
-                                    <label className="" htmlFor="numberOfChargesInput">
+                                    <label className="" htmlFor="chargesResetConditionSelect">
                                         Reset Condition
                                     </label>
                                     <select className="form-control"
