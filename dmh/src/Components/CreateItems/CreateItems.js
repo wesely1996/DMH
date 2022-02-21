@@ -140,6 +140,15 @@ class CreateItems extends Component{
             case "numberOfChargesInput":
                 this.setState({number_of_charges: event.target.value});
                 break;
+            case "addModifierButton":
+                this.addModifier();
+                break;
+            case "addConditionButton":
+                this.addCondition();
+                break;
+            case "addSpellsButton":
+                this.addSpell();
+                break;
             default:
                 break;
         }
@@ -177,8 +186,50 @@ class CreateItems extends Component{
     }
     
     handleSubmit(event) {
-        console.log(this.state);
         event.preventDefault();
+    }
+
+    addModifier(){
+        const mod = {
+            type : "",
+            subtype : "",
+            ability_score : "",
+            dice_count : 0,
+            dice_type : 1,
+            additional_bonus_type : "",
+            details : "",
+            duration : 0,
+            duration_interval : "seconds"
+        }
+        let new_modifiers = this.state.modifiers;
+        new_modifiers.push(mod);
+        this.setState({modifiers : new_modifiers});
+    }
+
+    addCondition(){
+        const condition = {
+            type : "",
+            details : "",
+            duration : 0,
+            duration_interval : "seconds"
+        }
+        let new_conditions = this.state.conditions;
+        new_conditions.push(condition);
+        this.setState({conditions : new_conditions});
+    }
+
+    addSpell(){
+        const spell = {
+            spell_name : "",
+            details : "",
+            min_charges : 1,
+            max_charges : 1,
+            save_dc: 8,
+            spell_cast_level: 1
+        }
+        let new_spells = this.state.spells;
+        new_spells.push(new_spells);
+        this.setState({spells : new_spells});
     }
     
     render(){
@@ -637,6 +688,80 @@ class CreateItems extends Component{
                                 }
                             </div> : 
                             <></>
+                        }
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                        <div className="d-flex flex-row justify-content-center">
+                            <label className="mr-2" htmlFor="addModifierButton">
+                                Modifier Count: {this.state.modifiers.length}
+                            </label>
+                            <button className="btn btn-dark"
+                            name="addModifierButton"
+                            type="button"
+                            onClick={this.handleChange}>
+                                +
+                            </button>
+                        </div>
+                        {
+                        this.state.modifiers.map((element, index) => {
+                            return <div className="d-flex flex-row justify-content-center" key={index}>
+                                {/* type : "",
+                                subtype : "",
+                                ability_score : "",
+                                dice_count : 0,
+                                dice_type : 1,
+                                additional_bonus_type : "",
+                                details : "",
+                                duration : 0,
+                                duration_interval : "seconds" */}
+                                MOD {index}
+                            </div>;
+                        })
+                        }
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                        <div className="d-flex flex-row justify-content-center">
+                            <label className="mr-2" htmlFor="addConditionButton">
+                                Condition Count: {this.state.conditions.length}
+                            </label>
+                            <button className="btn btn-dark"
+                            name="addConditionButton"
+                            type="button"
+                            onClick={this.handleChange}>
+                                +
+                            </button>
+                        </div>
+                        {
+                        this.state.conditions.map((element, index) => {
+                            return <div className="d-flex flex-row justify-content-center" key={index}>
+                                {/* type : "",
+                                details : "",
+                                duration : 0,
+                                duration_interval : "seconds" */}
+                                Condition {index}
+                            </div>;
+                        })
+                        }
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                        <div className="d-flex flex-row justify-content-center">
+                            <label className="mr-2" htmlFor="addSpellsButton">
+                                Spell Count: {this.state.spells.length}
+                            </label>
+                            <button className="btn btn-dark"
+                            name="addSpellsButton"
+                            type="button"
+                            onClick={this.handleChange}>
+                                +
+                            </button>
+                        </div>
+                        {
+                        this.state.spells.map((element, index) => {
+                            return <div className="d-flex flex-row justify-content-center" key={index}>
+                                {/*  */}
+                                Spell {index}
+                            </div>;
+                        })
                         }
                     </div>
                     <div>

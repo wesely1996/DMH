@@ -131,9 +131,9 @@ describe('CreateItems', ()=>{
         expect(selectElement).toHaveLength(base_num_inputs);
     });
 
-    it('has 2 button elements renedered', ()=>{
+    it('has 3 button elements renedered', ()=>{
         const selectElement = ciWrapper.find('button');
-        expect(selectElement).toHaveLength(2);
+        expect(selectElement).toHaveLength(3);
     });
 
     it('has 1 textarea element renedered', ()=>{
@@ -374,7 +374,7 @@ describe('ChangeFormLayout',()=>{
             spells: []
         })
 
-        ciWrapper.find('button').at(1).simulate('click');
+        ciWrapper.find('button').at(2).simulate('click');
         const ciState = ciWrapper.state();
         expect(ciState.name).toEqual("");
         expect(ciState.rarity).toEqual("common");
