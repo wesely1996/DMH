@@ -11,7 +11,6 @@ import './MainNavbar.css';
 
 class MainNavbar extends Component {
 
-
     render(){
         return(
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
